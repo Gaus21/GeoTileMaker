@@ -50,8 +50,8 @@ find "$input_path" -type f -name "*$keyword*.$file_extension" -printf '%T@ %p\n'
 done
 
 
-# Delete the oldest files in $output_tiles_path except the most recent one
-find "$output_tiles_path" -type f -printf '%T@ %p\n' | sort -n | head -n -1 | cut -f2- -d' ' | while read filepath; do
-    echo "Deleting: $filepath"
-    rm -f "$filepath"
+# Delete the oldest folders in $output_tiles_path except the most recent one
+find "$output_tiles_path" -mindepth 1 -maxdepth 1 -type d -printf '%T@ %p\n' | sort -n | head -n -1 | cut -f2- -d' ' | while read folderpath; do
+    echo "Deleting folder: $folderpath"
+    rm -rf "$folderpath"
 done
